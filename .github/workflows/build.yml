@@ -1,0 +1,40 @@
+name: Build Java Code
+
+on:
+  push:
+    branches: ['**']  # Trigger on push to any branch
+  workflow_dispatch:  # Allow manual triggering
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        java: [17, 21]  # Test with both Java versions
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+          
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        
+      - name: Compile Java code
+        run: ./gradlew compileJava
+        
+      - name: Compile test code
+        run: ./gradlew compileTestJava
+        
+      - name: Build all modules
+        run: ./gradlew assemble
