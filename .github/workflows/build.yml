@@ -1,4 +1,4 @@
-name: Build Java Code
+name: Compile Java Code
 
 on:
   push:
@@ -30,11 +30,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         
-      - name: Compile Java code
-        run: ./gradlew compileJava
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
         
-      - name: Compile test code
-        run: ./gradlew compileTestJava
+      - name: Compile main Java code
+        run: ./gradlew compileJava --no-daemon --console=plain
         
-      - name: Build all modules
-        run: ./gradlew assemble
+      - name: Compile test Java code  
+        run: ./gradlew compileTestJava --no-daemon --console=plain
+        
+      - name: Assemble JAR files
+        run: ./gradlew assemble --no-daemon --console=plain
