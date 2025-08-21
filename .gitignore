@@ -46,3 +46,7 @@ hs_err_pid*
 # ZAP
 # ---
 *.zap
+
+# Custom ignore files
+# -------------------
+ignore.txt
