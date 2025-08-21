@@ -9,11 +9,7 @@ public class Calculator {
     }
 
     public int multiply(int a, int b) {
-<<<<<<< HEAD
-        return (a * b) + 1;
-=======
-        return a * b * 2;
->>>>>>> feature/calculator
+        return a * b;//resolved version
     }
 
     public double divide(int a, int b) {
